@@ -1,0 +1,146 @@
+/*题目描述
+用筛法求之N内的素数。
+输入
+N
+输出
+0～N的素数
+样例输入
+100
+样例输出
+2
+3
+5
+7
+11
+13
+17
+19
+23
+29
+31
+37
+41
+43
+47
+53
+59
+61
+67
+71
+73
+79
+83
+89
+97
+*/
+
+/*法一：穷举法，按照素数的定义，如果一个数除了1和它本身之外没有其他因数。
+让一个数依次对除了1和它本身之外的所有数进行取余，如果没有能整除的数（即余数为0），那么这个数就是素数。
+*/
+//C
+#include<stdio.h>
+
+int main()
+{
+    int n,i,j,f;
+    
+    scanf("%d",&n);
+    
+    for(i=2;i<=n;i++)
+    {
+        f=0;
+        for(j=2;j<i;j++)
+        {
+            if(!(i%j))//与i%j==0的效果一样
+                f++;
+        }
+        if(!f)//与f==0的效果一样
+            printf("%d\n",i);
+    }
+}
+
+/*法二：因为对于大于2的整数偶数来说，它们都不是素数，因此我们只需对于奇数采用穷举法判断下就行了，
+对于偶数来说就不需要判断了，直接略去。
+*/
+//C
+#include<stdio.h>
+#include<math.h>
+
+int main()
+{
+    int n,i,j,f;
+    
+    scanf("%d",&n);
+    
+    for(i=2;i<=n;i++)
+    {
+        if(i==2)
+            printf("2\n");//注意不要漏解
+        if(i%2)//与i%2！=0的效果相同
+        {
+            f=0;
+            for(j=2;j<i;j++)
+            {
+                if(!(i%j))
+                    f++;
+            }
+            if(!f)
+                printf("%d\n",i);
+        }
+    }
+}
+
+/*法三：对于一个小于n（被除数）的数m（除数）来说，如果m能整除n，则n/m必能整除n。
+举个例子，如果4能整除100，那么25（即100/4）必定能整除100。因此我们只需判断某数
+在2到它的平方根之间是否存在自然数因数即可（除以大于它平方根的数是会造成重复，比
+如果判断4能整除100之后，就没有必要再判断25是否能整除100了。）
+*/
+//C
+#include<stdio.h>
+#include<math.h>
+
+int main()
+{
+	int N;
+	int i,j;
+	int flag;
+	
+	scanf("%d",&N);
+	
+	for(i=2;i<=N;i++){
+		flag = 1;
+		for(j=2;j<=sqrt(i);j++){
+			if(!(i%j))
+				flag = 0;
+		}
+		if(flag)
+			printf("%d\n",i);
+	}
+	
+	return 0;
+}
+
+//C++
+#include<iostream>
+#include<cmath>
+using namespace std;
+
+int main()
+{
+	int N;
+	int i,j;
+	int flag;
+	
+	cin>>N;
+	for(i=2;i<=N;i++){
+		flag = 1;
+		for(j=2;j<=sqrt(i);j++){
+			if(!(i%j))
+				flag = 0;
+		}
+		if(flag)
+			cout<<i<<endl;
+	}
+	
+	return 0;
+}
